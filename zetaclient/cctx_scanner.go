@@ -108,7 +108,9 @@ func (sc *CctxScanner) EarliestPendingCctxByChain(bn int64, chainID int64) *cros
 
 	newPendingCctxs := sc.AllMissedPendingCctxByChain(chainID)
 	if len(newPendingCctxs) == 0 {
-		sc.logger.Info().Msgf("scanner: pending cctxs for chain %d is empty, next nonce to scan %d", chainID, sc.nextNonceToScan[chainID])
+		if bn%LogPrintBlks == 0 {
+			sc.logger.Info().Msgf("scanner: pending cctxs for chain %d is empty, next nonce to scan %d", chainID, sc.nextNonceToScan[chainID])
+		}
 		return nil
 	}
 
